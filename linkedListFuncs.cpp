@@ -43,7 +43,10 @@ int recursiveLargestValue(Node* head) {
  * Return &n3
  */
 Node* recursiveFindKthNode(Node *head, int k){
-    if (k == 1 || head->next == NULL) {
+    if (head == NULL){
+        return NULL
+    }
+    if (k == 1) {
         return head;
     }
     k--;
