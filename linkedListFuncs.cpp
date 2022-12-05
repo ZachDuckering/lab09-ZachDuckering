@@ -14,8 +14,10 @@ using namespace std;
 //return sum of all values in linked list using a recursive approach
 //if head is null return 0
 int recursiveSum(Node* head) {
+    //if head is the last node return its value
     if (head->next == NULL) 
         return head->data;
+    //returns the sum of heads value and all of the nodes after it
   return head->data+recursiveSum(head->next);
 }
 
@@ -24,10 +26,10 @@ int recursiveSum(Node* head) {
 //return the largest value in the linked list using a recursive approach
 //you may assume the list has at least one element
 int recursiveLargestValue(Node* head) {
+    //if head is the last node return its value
     if (head->next == NULL) 
         return head->data;
-    //if (head->data > recursiveLargestValue(head->next)) 
-    //    return 
+    //goes down until it reaches the end and then sets p to the largest of the two
     int p = recursiveLargestValue(head->next);
     if (head->data > p)
         return head->data;
@@ -43,13 +45,17 @@ int recursiveLargestValue(Node* head) {
  * Return &n3
  */
 Node* recursiveFindKthNode(Node *head, int k){
+    //if k is greater than the list length return NULL
     if (head == NULL){
         return NULL;
     }
+    //if head is Kth node return it
     if (k == 1) {
         return head;
     }
+    //count down to correct node
     k--;
+    //just continues to return the Kth node once it is found or NULL if k is too big
     return recursiveFindKthNode(head->next, k);
     //STUB: edit with the correct output, according to the lab instructions, using recursion
 }
@@ -65,11 +71,15 @@ Node* recursiveFindKthNode(Node *head, int k){
 * New list should look like this: n1 -> n3 -> n4
 */
 Node* recursiveDeleteKthNode(Node *head, int k) {
+    //if it reaches the end of the list or the desired node return the node after it (or NULL if at the end)
     if (k==1 || head->next == NULL) {
         return head->next;
     }
+    //count down to correct node
     k--;
+    //sets the next as the same if its not the Kth but if the next was originally the function will return the node after the Kth and shut the Kth node out of the list
     head->next = recursiveDeleteKthNode(head->next, k);
+    //returns the head to be set as the previous node's next head which is the same as it was before
     return head;
     //STUB: edit with the correct output, according to the lab instructions, using recursion
 }
@@ -84,10 +94,13 @@ Node* recursiveDeleteKthNode(Node *head, int k) {
 * Delete n1, n2 and return &n3
 */
 Node* recursiveRemoveKFromFront(Node *head, int k) {
+    //if it reaches the end of the list or it gets to the desired length return the new head
     if (k==1 || head->next == NULL) {
         return head->next;
     }
+    //to count down to correct node
     k--;
+    //just continues to return the new head
     return recursiveRemoveKFromFront(head->next, k);
     //STUB: edit with the correct output, according to the lab instructions, using recursion
 }
@@ -101,9 +114,12 @@ Node* recursiveRemoveKFromFront(Node *head, int k) {
  * Return &head of the linked list 5 -> 7 -> 9 -> 12
  */
 Node* recursiveElementwiseSum(Node *head1, Node *head2) {
+    //if there is nothing left in either list return NULL to end new list
     if (head1 == NULL && head2 == NULL) {
         return NULL;
     }
+
+    //if head1 or head2 is null then set their values to 0 and point to NULL so you dont take NULL->next
     int num1,num2;
     Node* h1;
     Node* h2;
@@ -121,11 +137,16 @@ Node* recursiveElementwiseSum(Node *head1, Node *head2) {
         num2 = head2->data;
         h2 = head2->next;
     }
+
+    //create a new node and set the value to the sums
     Node* p = new Node;
     p->data = num1+num2;
+
+    //set the next to the sum of the next two heads if there are ones
     p->next = recursiveElementwiseSum(h1, h2);
+
+    //return p to set the earlier nodes next to this new one
     return p;
-    //STUB: edit with the correct output, according to the lab instructions, using recursion
 }
 
 
@@ -139,11 +160,13 @@ Node* recursiveElementwiseSum(Node *head1, Node *head2) {
  * Return &head of 1 -> 4 -> 2 -> 5 -> 3 -> 6
  */
 Node* recursiveSplice(Node *head1, Node *head2) {
+    //if theres no more of either lists return them and the remaining nodes will be added to the end of the spliced one
     if (head1 == NULL)
         return head2;
     if (head2 == NULL)
         return head1;
     
+    //switch them to alternate them and set the next of head1 to head2
     head1->next = recursiveSplice(head2, head1->next);
     return head1;
     //STUB: edit with the correct output, according to the lab instructions, using recursion
